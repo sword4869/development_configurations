@@ -14,6 +14,6 @@ echo "deb-src http://http.kali.org/kali kali-rolling main contrib non-free" >> /
 
 # if you don't update & upgrade, then there will be a error, "Error relocating /usr/bin/ssh: __localtime64_r: symbol not found".	
 apt update
-apt upgrade
+echo 'we hava updated, but we do not upgrade.'
 
 exit 0
