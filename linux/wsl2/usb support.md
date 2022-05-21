@@ -1,7 +1,6 @@
 # OS
-先通过Microsoft Store下的kali。
 
-然后发现 win10 的 WLS2 不支持usb，所以得手动安装 usb: [usbip](https://docs.microsoft.com/en-us/windows/wsl/connect-usb)。
+win10 的 WLS2 不支持usb，所以得手动安装 usb: [usbip](https://docs.microsoft.com/en-us/windows/wsl/connect-usb)。
 
 
 然后发现kali不行：没有那个`linux-tools-5.4.0-77-generic`包。只有ubuntu有这个包，那么只能切换到ubuntu了.
@@ -17,10 +16,7 @@ Ubuntu-20.04(默认)
 docker-desktop-data
 docker-desktop
 kali-linux
-wsl2-usbip 
-
-# usbipd attach的是默认的OS。所以先设置默认的OS。
-$win: wsl --set-default wsl2-usbip
+wsl2-usbip
 
 $win: usbipd wsl list
 BUSID  VID:PID    DEVICE                                                        STATE
@@ -29,20 +25,36 @@ BUSID  VID:PID    DEVICE                                                        
 2-1    5986:2115  Integrated Camera                                             Not attached
 2-2    0bda:c024  Realtek Bluetooth Adapter                                     Not attached
 
-$win: usbipd wsl attach --busid 1-2
-# $win: usbipd wsl detach --busid 4-4
+# -a: Automatically re-attach when the device is detached or unplugged
+# -d: 就不用设置默认 wsl os
+$win: usbipd wsl attach -a --busid 1-2 -d wsl2-usbip
+usbipd: info: Starting endless attach loop; press Ctrl+C to quit.
+Attached
 ```
 
 ```bash
-root@DESKTOP-KSTB1B7:/mnt/c/Users/sword# lsusb
+$wsl: lsusb
 Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
 Bus 001 Device 011: ID 148f:3070 Ralink Technology, Corp. RT2870/RT3070 Wireless Adapter
 Bus 001 Device 002: ID 5986:2115 Acer, Inc Integrated Camera
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 ```
+```bash
+$wsl: usbip port
+Imported USB devices
+====================
+libusbip: error: fopen
+libusbip: error: read_record
+Port 00: <Port in Use> at High Speed(480Mbps)
+       Ralink Technology, Corp. : RT2870/RT3070 Wireless Adapter (148f:3070)
+       1-1 -> unknown host, remote port and remote busid
+           -> remote bus/dev 001/002
+```
+
+
 usb是有了，但是网卡没
 ```bash
-root@DESKTOP-KSTB1B7:/mnt/c/Users/sword# iwconfig
+$wsl: iwconfig
 lo        no wireless extensions.
 
 bond0     no wireless extensions.
@@ -54,8 +66,5 @@ tunl0     no wireless extensions.
 sit0      no wireless extensions.
 
 eth0      no wireless extensions.
-
-root@DESKTOP-KSTB1B7:/mnt/c/Users/sword# airmon-ng
-
-PHY     Interface       Driver          Chipset
 ```
+
