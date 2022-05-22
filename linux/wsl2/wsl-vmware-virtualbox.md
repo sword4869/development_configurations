@@ -6,6 +6,7 @@
 Turn Off Hyper-V. Make sure Hyper-v is not ticked. If it is Ticked, untick it and click "Ok".
 
 2. Virtualization enabled in the BIOS
+![CPU-visualization.jpg](../../img/CPU-visualization.jpg)
 
 3. Hypervisor disabled at Windows startup
 - Open console prompt window as an administrator. PS: not powershell.
@@ -26,6 +27,7 @@ But WSL2, Docker can not work.
 PS: We use WLS2 to support Docker, so do not need click Hyper-V
 
 2. Virtualization enabled in the BIOS
+![CPU-visualization.jpg](../../img/CPU-visualization.jpg)
 3. Hypervisor enabled at Windows startup
 - Open console prompt window as an administrator. PS: not powershell.
 - Run "`bcdedit /enum {current}`" to watch the value of `hypervisorlaunchtype`. We need enable it.
